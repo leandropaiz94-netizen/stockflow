@@ -1,0 +1,12 @@
+{
+  "name": "backend-proyecto",
+  "version": "1.0.0",
+  "description": "Proyecto backend MVC con Node.js, Express y MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
