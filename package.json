@@ -17,5 +17,15 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leandropaiz94-netizen/stockflow.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/leandropaiz94-netizen/stockflow/issues"
+  },
+  "homepage": "https://github.com/leandropaiz94-netizen/stockflow#readme"
 }
