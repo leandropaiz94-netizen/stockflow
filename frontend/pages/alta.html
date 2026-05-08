@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alta Producto — StockFlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .alta { max-width: 560px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+    .alta__title { font-family: var(--font-display); font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .alta__sub { color: var(--c-text-muted); font-size: 0.9rem; margin-bottom: 2.5rem; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.25rem; }
+    .form-group label { font-size: 0.85rem; font-weight: 500; color: var(--c-text-muted); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      color: var(--c-text);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      transition: border-color var(--transition);
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--c-accent); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-group select option { background: var(--c-surface); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-submit {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--c-accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #000;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: all var(--transition);
+    }
+    .btn-submit:hover { background: #00ffb3; transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="navbar__brand">
+      <span class="navbar__icon">⬡</span>
+      <span class="navbar__name">StockFlow</span>
+    </div>
+    <nav class="navbar__links">
+      <a href="../index.html">Catálogo</a>
+      <a href="alta.html" class="active">Alta producto</a>
+    </nav>
+  </header>
+
+  <section class="alta">
+    <h1 class="alta__title">Alta de producto</h1>
+    <p class="alta__sub">Completá el formulario para agregar un nuevo insumo al sistema.</p>
+
+    <form id="altaForm">
+      <div class="form-group">
+        <label for="nombre">Nombre *</label>
+        <input type="text" id="nombre" placeholder="Ej: Guantes de látex talle M" required />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="codigo">Código *</label>
+          <input type="text" id="codigo" placeholder="Ej: DESC-001" required />
+        </div>
+        <div class="form-group">
+          <label for="categoria">Categoría *</label>
+          <select id="categoria" required>
+            <option value="">Seleccioná...</option>
+            <option value="descartable">Descartable</option>
+            <option value="instrumental">Instrumental</option>
+            <option value="medicamento">Medicamento</option>
+            <option value="equipo">Equipo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="stock">Stock inicial</label>
+          <input type="number" id="stock" placeholder="0" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="stockMinimo">Stock mínimo</label>
+          <input type="number" id="stockMinimo" placeholder="5" min="0" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="precio">Precio ($)</label>
+          <input type="number" id="precio" placeholder="0" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="unidad">Unidad</label>
+          <input type="text" id="unidad" placeholder="Ej: caja, unidad, litro" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="proveedor">Proveedor</label>
+        <input type="text" id="proveedor" placeholder="Ej: MediSupply SA" />
+      </div>
+
+      <div class="form-group">
+        <label for="vencimiento">Fecha de vencimiento</label>
+        <input type="date" id="vencimiento" />
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" placeholder="Descripción opcional del producto..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">Agregar producto</button>
+    </form>
+  </section>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API_URL = 'http://localhost:3000/api';
+    const toast   = document.getElementById('toast');
+    const form    = document.getElementById('altaForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    let toastTimer;
+    function showToast(msg, tipo = '') {
+      clearTimeout(toastTimer);
+      toast.textContent = msg;
+      toast.className = `toast ${tipo} show`;
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const producto = {
+        nombre:      document.getElementById('nombre').value.trim(),
+        codigo:      document.getElementById('codigo').value.trim(),
+        categoria:   document.getElementById('categoria').value,
+        stock:       Number(document.getElementById('stock').value) || 0,
+        stockMinimo: Number(document.getElementById('stockMinimo').value) || 5,
+        precio:      Number(document.getElementById('precio').value) || 0,
+        unidad:      document.getElementById('unidad').value.trim() || 'unidad',
+        proveedor:   document.getElementById('proveedor').value.trim(),
+        vencimiento: document.getElementById('vencimiento').value || undefined,
+        descripcion: document.getElementById('descripcion').value.trim()
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Guardando...';
+
+      try {
+        const res = await fetch(`${API_URL}/productos`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(producto)
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'Error al guardar');
+        }
+
+        showToast(`"${producto.nombre}" agregado correctamente ✓`, 'success');
+        form.reset();
+
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || 'Error al conectar con el servidor', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Agregar producto';
+      }
+    });
+  </script>
+</body>
+</html>

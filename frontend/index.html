@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StockFlow — Gestión de Insumos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar__brand">
+      <span class="navbar__icon">⬡</span>
+      <span class="navbar__name">StockFlow</span>
+    </div>
+    <nav class="navbar__links">
+      <a href="index.html" class="active">Catálogo</a>
+      <a href="pages/alta.html">Alta producto</a>
+    </nav>
+    <button class="navbar__cart-btn" id="cartToggle">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="navbar__cart-count" id="cartCount">0</span>
+    </button>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__content">
+      <p class="hero__label">Sistema de gestión</p>
+      <h1 class="hero__title">Insumos<br/><em></em></h1>
+      <p class="hero__sub">Catálogo</p>
+    </div>
+    <div class="hero__bg"></div>
+  </section>
+
+  <!-- FILTROS -->
+  <section class="filters">
+    <div class="filters__inner">
+      <button class="filter-btn active" data-cat="todos">Todos</button>
+      <button class="filter-btn" data-cat="descartable">Descartables</button>
+      <button class="filter-btn" data-cat="instrumental">Instrumental</button>
+      <button class="filter-btn" data-cat="medicamento">Medicamentos</button>
+      <button class="filter-btn" data-cat="equipo">Equipos</button>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <main class="catalogo">
+    <div class="catalogo__grid" id="productosGrid">
+      <!-- productos cargados por JS -->
+    </div>
+    <div class="catalogo__empty hidden" id="emptyState">
+      <p>No hay productos disponibles en esta categoría.</p>
+    </div>
+    <div class="catalogo__loading" id="loadingState">
+      <div class="spinner"></div>
+      <p>Cargando productos...</p>
+    </div>
+  </main>
+
+  <!-- CARRITO LATERAL -->
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer__header">
+      <h2>Tu pedido</h2>
+      <button class="cart-drawer__close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-drawer__items" id="cartItems">
+      <p class="cart-drawer__empty">El carrito está vacío.</p>
+    </div>
+    <div class="cart-drawer__footer">
+      <div class="cart-drawer__total">
+        <span>Total</span>
+        <strong id="cartTotal">$0</strong>
+      </div>
+      <button class="cart-drawer__confirm" id="confirmBtn" disabled>
+        Confirmar pedido
+      </button>
+    </div>
+  </aside>
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
