@@ -4,15 +4,46 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Alta Producto — StockFlow</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="../css/style.css" />
+
   <style>
-    .alta { max-width: 560px; margin: 0 auto; padding: 3rem 2rem 4rem; }
-    .alta__title { font-family: var(--font-display); font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .alta__sub { color: var(--c-text-muted); font-size: 0.9rem; margin-bottom: 2.5rem; }
-    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.25rem; }
-    .form-group label { font-size: 0.85rem; font-weight: 500; color: var(--c-text-muted); }
+    .alta {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    .alta__title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .alta__sub {
+      color: var(--c-text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--c-text-muted);
+    }
+
     .form-group input,
     .form-group select,
     .form-group textarea {
@@ -23,16 +54,21 @@
       font-family: var(--font-body);
       font-size: 0.95rem;
       padding: 0.75rem 1rem;
-      transition: border-color var(--transition);
       outline: none;
       width: 100%;
     }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--c-accent); }
-    .form-group textarea { resize: vertical; min-height: 90px; }
-    .form-group select option { background: var(--c-surface); }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
     .btn-submit {
       width: 100%;
       padding: 0.9rem;
@@ -45,12 +81,15 @@
       font-weight: 700;
       cursor: pointer;
       margin-top: 0.5rem;
-      transition: all var(--transition);
     }
-    .btn-submit:hover { background: #00ffb3; transform: translateY(-1px); }
-    .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   </style>
 </head>
+
 <body>
 
   <header class="navbar">
@@ -58,6 +97,7 @@
       <span class="navbar__icon">⬡</span>
       <span class="navbar__name">StockFlow</span>
     </div>
+
     <nav class="navbar__links">
       <a href="../index.html">Catálogo</a>
       <a href="alta.html" class="active">Alta producto</a>
@@ -65,22 +105,30 @@
   </header>
 
   <section class="alta">
+
     <h1 class="alta__title">Alta de producto</h1>
-    <p class="alta__sub">Completá el formulario para agregar un nuevo insumo al sistema.</p>
+
+    <p class="alta__sub">
+      Completá el formulario para agregar un nuevo insumo al sistema.
+    </p>
 
     <form id="altaForm">
+
       <div class="form-group">
         <label for="nombre">Nombre *</label>
-        <input type="text" id="nombre" placeholder="Ej: Guantes de látex talle M" required />
+        <input type="text" id="nombre" required />
       </div>
 
       <div class="form-row">
+
         <div class="form-group">
           <label for="codigo">Código *</label>
-          <input type="text" id="codigo" placeholder="Ej: DESC-001" required />
+          <input type="text" id="codigo" required />
         </div>
+
         <div class="form-group">
           <label for="categoria">Categoría *</label>
+
           <select id="categoria" required>
             <option value="">Seleccioná...</option>
             <option value="descartable">Descartable</option>
@@ -89,79 +137,52 @@
             <option value="equipo">Equipo</option>
           </select>
         </div>
+
       </div>
 
       <div class="form-row">
-        <div class="form-group">
-          <label for="stock">Stock inicial</label>
-          <input type="number" id="stock" placeholder="0" min="0" />
-        </div>
-        <div class="form-group">
-          <label for="stockMinimo">Stock mínimo</label>
-          <input type="number" id="stockMinimo" placeholder="5" min="0" />
-        </div>
-      </div>
 
-      <div class="form-row">
         <div class="form-group">
-          <label for="precio">Precio ($)</label>
-          <input type="number" id="precio" placeholder="0" min="0" />
+          <label for="stock">Stock</label>
+          <input type="number" id="stock" min="0" />
         </div>
+
         <div class="form-group">
-          <label for="unidad">Unidad</label>
-          <input type="text" id="unidad" placeholder="Ej: caja, unidad, litro" />
+          <label for="precio">Precio</label>
+          <input type="number" id="precio" min="0" />
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="proveedor">Proveedor</label>
-        <input type="text" id="proveedor" placeholder="Ej: MediSupply SA" />
-      </div>
-
-      <div class="form-group">
-        <label for="vencimiento">Fecha de vencimiento</label>
-        <input type="date" id="vencimiento" />
       </div>
 
       <div class="form-group">
         <label for="descripcion">Descripción</label>
-        <textarea id="descripcion" placeholder="Descripción opcional del producto..."></textarea>
+
+        <textarea id="descripcion"></textarea>
       </div>
 
-      <button type="submit" class="btn-submit" id="submitBtn">Agregar producto</button>
+      <button type="submit" class="btn-submit" id="submitBtn">
+        Agregar producto
+      </button>
+
     </form>
+
   </section>
 
-  <div class="toast" id="toast"></div>
-
   <script>
-const path = require('path');
-app.use(express.static(path.join(__dirname, '../frontend')));
-    const toast   = document.getElementById('toast');
-    const form    = document.getElementById('altaForm');
+
+    const form = document.getElementById('altaForm');
     const submitBtn = document.getElementById('submitBtn');
 
-    let toastTimer;
-    function showToast(msg, tipo = '') {
-      clearTimeout(toastTimer);
-      toast.textContent = msg;
-      toast.className = `toast ${tipo} show`;
-      toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
-    }
-
     form.addEventListener('submit', async (e) => {
+
       e.preventDefault();
 
       const producto = {
-        nombre:      document.getElementById('nombre').value.trim(),
-        codigo:      document.getElementById('codigo').value.trim(),
-        categoria:   document.getElementById('categoria').value,
-        stock:       Number(document.getElementById('stock').value) || 0,
-        stockMinimo: Number(document.getElementById('stockMinimo').value) || 5,
-        precio:      Number(document.getElementById('precio').value) || 0,
-        unidad:      document.getElementById('unidad').value.trim() || 'unidad',
-        proveedor:   document.getElementById('proveedor').value.trim(),
-        vencimiento: document.getElementById('vencimiento').value || undefined,
+        nombre: document.getElementById('nombre').value.trim(),
+        codigo: document.getElementById('codigo').value.trim(),
+        categoria: document.getElementById('categoria').value,
+        stock: Number(document.getElementById('stock').value) || 0,
+        precio: Number(document.getElementById('precio').value) || 0,
         descripcion: document.getElementById('descripcion').value.trim()
       };
 
@@ -169,28 +190,44 @@ app.use(express.static(path.join(__dirname, '../frontend')));
       submitBtn.textContent = 'Guardando...';
 
       try {
-        const res = await fetch(`${API_URL}/productos`, {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify(producto)
+
+        const response = await fetch('/api/productos', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(producto)
         });
 
-        if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err.error || 'Error al guardar');
+        const data = await response.json();
+
+        if (!response.ok) {
+          console.error(data);
+          alert(data.error || 'Error al guardar producto');
+          return;
         }
 
-        showToast(`"${producto.nombre}" agregado correctamente ✓`, 'success');
+        console.log(data);
+
+        alert('Producto agregado correctamente');
+
         form.reset();
 
-      } catch (err) {
-        console.error(err);
-        showToast(err.message || 'Error al conectar con el servidor', 'error');
+      } catch (error) {
+
+        console.error(error);
+
+        alert('Error al conectar con el servidor');
+
       } finally {
+
         submitBtn.disabled = false;
         submitBtn.textContent = 'Agregar producto';
       }
+
     });
+
   </script>
+
 </body>
 </html>

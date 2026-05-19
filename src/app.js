@@ -16,7 +16,7 @@ app.use('/api/productos', productosRoutes);
 app.use('/api/carrito', carritoRoutes);
 
 app.get('/', (req, res) => {
-  res.json({ mensaje: 'StockFlow API funcionando ✅' });
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 app.use(errorHandler);
